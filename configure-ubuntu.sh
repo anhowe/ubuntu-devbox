@@ -6,8 +6,8 @@
 
 echo "starting ubuntu devbox install on pid $$"
 
-#sudo apt-get -y update
-#sudo DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes install ubuntu-desktop firefox vnc4server ntp nodejs npm expect gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal gnome-core
+sudo apt-get -y update
+sudo DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes install ubuntu-desktop firefox vnc4server ntp nodejs npm expect gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal gnome-core
 
 #########################################
 # Setup Azure User Account including VNC
@@ -38,21 +38,21 @@ sudo -i -u azureuser startvnc
 sudo -i -u azureuser stopvnc
 
 echo "#!/bin/sh" | sudo tee ~azureuser/.vnc/xstartup
-echo "" | sudo tee ~azureuser/.vnc/xstartup
-echo "export XKL_XMODMAP_DISABLE=1" | sudo tee ~azureuser/.vnc/xstartup
-echo "unset SESSION_MANAGER" | sudo tee ~azureuser/.vnc/xstartup
-echo "unset DBUS_SESSION_BUS_ADDRESS" | sudo tee ~azureuser/.vnc/xstartup
-echo "" | sudo tee ~azureuser/.vnc/xstartup
-echo "[ -x /etc/vnc/xstartup ] && exec /etc/vnc/xstartup" | sudo tee ~azureuser/.vnc/xstartup
-echo "[ -r $HOME/.Xresources ] && xrdb $HOME/.Xresources" | sudo tee ~azureuser/.vnc/xstartup
-echo "xsetroot -solid grey" | sudo tee ~azureuser/.vnc/xstartup
-echo "vncconfig -iconic &" | sudo tee ~azureuser/.vnc/xstartup
-echo "" | sudo tee ~azureuser/.vnc/xstartup
-echo "gnome-panel &" | sudo tee ~azureuser/.vnc/xstartup
-echo "gnome-settings-daemon &" | sudo tee ~azureuser/.vnc/xstartup
-echo "metacity &" | sudo tee ~azureuser/.vnc/xstartup
-echo "nautilus &" | sudo tee ~azureuser/.vnc/xstartup
-echo "gnome-terminal &" | sudo tee ~azureuser/.vnc/xstartup
+echo "" | sudo tee -a ~azureuser/.vnc/xstartup
+echo "export XKL_XMODMAP_DISABLE=1" | sudo tee -a ~azureuser/.vnc/xstartup
+echo "unset SESSION_MANAGER" | sudo tee -a ~azureuser/.vnc/xstartup
+echo "unset DBUS_SESSION_BUS_ADDRESS" | sudo tee -a ~azureuser/.vnc/xstartup
+echo "" | sudo tee -a ~azureuser/.vnc/xstartup
+echo "[ -x /etc/vnc/xstartup ] && exec /etc/vnc/xstartup" | sudo tee -a ~azureuser/.vnc/xstartup
+echo "[ -r $HOME/.Xresources ] && xrdb $HOME/.Xresources" | sudo tee -a ~azureuser/.vnc/xstartup
+echo "xsetroot -solid grey" | sudo tee -a ~azureuser/.vnc/xstartup
+echo "vncconfig -iconic &" | sudo tee -a ~azureuser/.vnc/xstartup
+echo "" | sudo tee -a ~azureuser/.vnc/xstartup
+echo "gnome-panel &" | sudo tee -a ~azureuser/.vnc/xstartup
+echo "gnome-settings-daemon &" | sudo tee -a ~azureuser/.vnc/xstartup
+echo "metacity &" | sudo tee -a ~azureuser/.vnc/xstartup
+echo "nautilus &" | sudo tee -a ~azureuser/.vnc/xstartup
+echo "gnome-terminal &" | sudo tee -a ~azureuser/.vnc/xstartup
 
 sudo -i -u azureuser ~azureuser/bin/startvnc
 
