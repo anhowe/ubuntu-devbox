@@ -66,5 +66,5 @@ sudo update-alternatives --install /usr/bin/node nodejs /usr/bin/nodejs 100
 cd /tmp
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo dpkg -i google-chrome-stable_current_amd64.deb
-sudo apt-get -f install
+sudo apt-get -y --force-yes install -f install
 rm /tmp/google-chrome-stable_current_amd64.deb
