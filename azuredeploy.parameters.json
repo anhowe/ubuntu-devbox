@@ -1,0 +1,14 @@
+{
+  "newStorageAccountName": {
+    "value": "ubuntudevbox0905b"
+  },
+  "adminPassword": {
+    "value": "Docker4Me$"
+  },
+  "dnsNameForPublicIP": {
+    "value": "ubuntudevbox0905b"
+  },
+  "vmsize" : {
+    "value": "Standard_D2"
+  }
+}
