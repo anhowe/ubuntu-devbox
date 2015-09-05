@@ -4,6 +4,8 @@
 # Update Ubuntu and install all necessary binaries
 ###################################################
 
+echo "starting ubuntu devbox install on pid $$"
+
 #sudo apt-get -y update
 #sudo DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes install ubuntu-desktop firefox vnc4server ntp nodejs npm expect gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal gnome-core
 
@@ -66,5 +68,6 @@ sudo update-alternatives --install /usr/bin/node nodejs /usr/bin/nodejs 100
 cd /tmp
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo dpkg -i google-chrome-stable_current_amd64.deb
-sudo apt-get -y --force-yes install -f install
+sudo apt-get -y --force-yes install -f
 rm /tmp/google-chrome-stable_current_amd64.deb
+echo "completed ubuntu devbox install on pid $$"
