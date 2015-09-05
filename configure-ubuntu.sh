@@ -5,13 +5,14 @@
 ###################################################
 
 echo "starting ubuntu devbox install on pid $$"
+date
 ps axjf
 
-sudo apt-get -y update
+time sudo apt-get -y update
 # kill the waagent and uninstall, otherwise, adding the desktop will do this and kill this script
 sudo pkill waagent
-sudo apt-get -y remove walinuxagent
-sudo DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes install ubuntu-desktop firefox vnc4server ntp nodejs npm expect gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal gnome-core
+time sudo apt-get -y remove walinuxagent
+time sudo DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes install ubuntu-desktop firefox vnc4server ntp nodejs npm expect gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal gnome-core
 
 #########################################
 # Setup Azure User Account including VNC
@@ -63,15 +64,16 @@ sudo -i -u azureuser ~azureuser/bin/startvnc
 #####################
 # setup the Azure CLI
 #####################
-sudo npm install azure-cli -g
-sudo update-alternatives --install /usr/bin/node nodejs /usr/bin/nodejs 100
+time sudo npm install azure-cli -g
+time sudo update-alternatives --install /usr/bin/node nodejs /usr/bin/nodejs 100
 
 ####################
 # Setup Chrome
 ####################
 cd /tmp
-wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-sudo dpkg -i google-chrome-stable_current_amd64.deb
-sudo apt-get -y --force-yes install -f
-rm /tmp/google-chrome-stable_current_amd64.deb
+time wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+time sudo dpkg -i google-chrome-stable_current_amd64.deb
+time sudo apt-get -y --force-yes install -f
+time rm /tmp/google-chrome-stable_current_amd64.deb
+date
 echo "completed ubuntu devbox install on pid $$"
