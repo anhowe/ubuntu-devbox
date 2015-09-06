@@ -31,7 +31,7 @@ These instructions walk through on how to setup a fast secure remote desktop ses
  1. Run putty
  2. Enable compression, this allows for a fast remote desktop experience
  ![Image of enabling compression in putty](https://raw.githubusercontent.com/anhowe/ubuntu-devbox/master/images/putty-compression.png)
- 3.Add a tunnel - this enables a secure remote desktop over ssh.
+ 3. Add a tunnel - this enables a secure remote desktop over ssh.
  ![Image of creating a tunnel](https://raw.githubusercontent.com/anhowe/ubuntu-devbox/master/images/putty-vnc-tunnel.png)
  4. save your session
  ![Image of saving putty settings](https://raw.githubusercontent.com/anhowe/ubuntu-devbox/master/images/putty-vnc-settings.png)
@@ -42,4 +42,4 @@ These instructions walk through on how to setup a fast secure remote desktop ses
  ![Image of adjusting VNC settings](https://raw.githubusercontent.com/anhowe/ubuntu-devbox/master/images/vnc-settings.png)
  3. since the ssh provides encryption and to get maximum speed from ssh compression, turn off encrytpion, and open your session to "localhost:1".  ":1" represents port 5901, which you had previously setup with the ssh tunnel:
  ![Image of adjusting VNC connection](https://raw.githubusercontent.com/anhowe/ubuntu-devbox/master/images/vnc-connection.png)
- 4.now you should be connected to your session.
+ 4. now you should be connected to your session.
