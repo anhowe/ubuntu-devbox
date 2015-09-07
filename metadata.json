@@ -1,6 +1,6 @@
 {
   "itemDisplayName": "Create an Ubuntu desktop",
-  "description": "This template creates an ubuntu desktop.",
+  "description": "This template creates an ubuntu desktop machine.  This would be great to use as a jumpbox behind a NAT.",
   "summary": "Create an Ubuntu desktop workstation.",
   "githubUsername": "anhowe",
   "dateUpdated": "2015-09-01"

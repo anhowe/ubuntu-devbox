@@ -22,15 +22,25 @@
     },
     "vmSize": {
       "type": "string",
-      "defaultValue": "Standard_D1",
+      "defaultValue": "Standard_D2",
+      "allowedValues": [
+        "Standard_D1",
+        "Standard_D2",
+        "Standard_D3",
+        "Standard_D4",
+        "Standard_D11",
+        "Standard_D12",
+        "Standard_D13",
+        "Standard_D14"
+      ],
       "metadata": {
-        "description": "The size of the Virtual Machine."
+        "description": "The VM role size of the jump box"
       }
     }
   },
   "variables": {
     "adminUsername": "azureuser",
-    "vmName": "devbox",
+    "vmName": "jumpbox",
     "availabilitySetNodes": "avail-set",
     "osImagePublisher": "Canonical",
     "osImageOffer": "UbuntuServer",
@@ -271,10 +281,7 @@
         "type": "CustomScriptForLinux",
         "typeHandlerVersion": "1.2",
         "settings": {
-          "fileUris": [
-            "https://raw.githubusercontent.com/anhowe/ubuntu-devbox/master/configure-ubuntu-bootstrap.sh"
-          ],
-          "commandToExecute": "'/bin/bash configure-ubuntu-bootstrap.sh"
+          "commandToExecute": "/bin/bash -c 'wget --tries 20 --retry-connrefused --waitretry=15 -qO- https://raw.githubusercontent.com/anhowe/ubuntu-devbox/master/configure-ubuntu.sh | nohup /bin/bash > /var/log/azure/firstinstall.log 2>&1 &'"
         }
       }
     }
