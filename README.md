@@ -24,7 +24,9 @@ To connect to your new Ubuntu desktop machine from a Mac machine you can use VNC
 
 1. on a shell window, connect to the Ubuntu machine using the following command:
 ```
- ssh -L 5901:127.0.0.1:5901 <your username>@FQDN of the name, ex. ssh -L 5901:127.0.0.1:5901 azureuser@mybox.westus.cloudapp.azure.com
+ ssh -L 5901:127.0.0.1:5901 <your username>@FQDN of the name
+ 
+ ex. ssh -L 5901:127.0.0.1:5901 azureuser@mybox.westus.cloudapp.azure.com
 ```
 Note: You can find the FQDN to use in the Azure portal.
 
