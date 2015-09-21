@@ -28,10 +28,13 @@ To connect to your new Ubuntu desktop machine from a Mac machine you can use VNC
  
  ex. ssh -L 5901:127.0.0.1:5901 azureuser@mybox.westus.cloudapp.azure.com
 ```
-Note: You can find the FQDN to use in the Azure portal.
+2. vncviewer asks for a password in order to start the session. The default password is 'password'. You can chan
+![image of VNCViewer](images/vncviewer-password.png) 
 
 Once the ssh session is successfully created, you can launch the VNCViewer app and connect to localhost:1
 ![image of VNCViewer](images/vncviewer-session-mac.png) 
+
+NOTE: vncviewer may ask for 
  
 # Accessing from Windows
 
