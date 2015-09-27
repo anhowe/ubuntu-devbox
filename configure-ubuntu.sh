@@ -9,7 +9,6 @@ echo "starting ubuntu devbox install on pid $$"
 date
 ps axjf
 pstree -salp
-sleep 60
 #############
 # Parameters
 #############
@@ -113,8 +112,7 @@ ensureDocker
 time sudo apt-get -y update
 # kill the waagent and uninstall, otherwise, adding the desktop will do this and kill this script
 sudo pkill waagent
-sudo pkill customerscript.py
-sleep 60
+sudo pkill customscript.py
 time sudo apt-get -y remove walinuxagent
 time sudo DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes install ubuntu-desktop firefox vnc4server ntp nodejs npm expect gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal gnome-core
 
