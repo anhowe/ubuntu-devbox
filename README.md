@@ -15,7 +15,7 @@ Below are the parameters that the template expects:
 | dnsNameForPublicIP  | Unique DNS Name for the Public IP used to access the master Virtual Machine. |
 | vmsize | specify an azure vm size for the machine |
 
-This template runs quickly, but the overall install takes about 1 hour to complete.  You can SSH into the VM and watch /var/log/azure/firstinstall.log to see progress.
+This template runs quickly, but the overall install takes about 1 hour to complete.  You can SSH into the VM and watch /var/log/azure/cluster-bootstrap.log to see progress.
 
 Once complete, you can create a compressed SSH tunnel to VNC port 5901, and then use VNC to see the desktop.  You can edit ~azureuser/bin/startvnc to adjust the resolution of the desktop.  Be sure to enable compression on the tunnel, otherwise performance will be sluggish.  Instructions for accessing from Windows are below.
 
