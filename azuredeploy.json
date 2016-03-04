@@ -220,7 +220,7 @@
                 "id": "[variables('nodesLbIPConfigID')]"
               },
               "protocol": "tcp",
-              "frontendPort": 2211,
+              "frontendPort": 22,
               "backendPort": 22,
               "enableFloatingIP": false
             }
@@ -249,17 +249,16 @@
           "computername": "[variables('vmName')]",
           "adminUsername": "[variables('adminUsername')]",
           "adminPassword": "[variables('adminPassword')]",
-          "linuxConfigurations":
-              {
-                  "ssh": {
-                      "publicKeys": [
-                          {
-                              "path": "[variables('sshKeyPath')]",
-                              "keyData": "[variables('sshRSAPublicKey')]"
-                          }
-                      ]
-                  }
+          "linuxConfiguration": {
+              "ssh": {
+                  "publicKeys": [
+                      {
+                          "path": "[variables('sshKeyPath')]",
+                          "keyData": "[variables('sshRSAPublicKey')]"
+                      }
+                  ]
               }
+          }
         },
         "storageProfile": {
           "imageReference": {

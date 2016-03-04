@@ -1,5 +1,5 @@
 $VerbosePreference="Continue"
-$deployName="anhowe0304a"
+$deployName="anhowe0304b"
 $RGName=$deployName
 $locName="West US"
 $templateFile= "azuredeploy.json"
