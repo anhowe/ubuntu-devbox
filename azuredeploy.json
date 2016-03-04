@@ -2,12 +2,6 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "newStorageAccountName": {
-      "type": "string",
-      "metadata": {
-        "description": "Unique DNS Name Prefix for the Storage Account where the Virtual Machine's disks will be placed.  StorageAccounts may contain at most variables('vmsPerStorageAccount')"
-      }
-    },
     "adminPassword": {
       "type": "securestring",
       "metadata": {
@@ -22,7 +16,7 @@
     },
     "vmSize": {
       "type": "string",
-      "defaultValue": "Standard_D2",
+      "defaultValue": "Standard_D4",
       "allowedValues": [
         "Standard_D1",
         "Standard_D2",
@@ -36,9 +30,21 @@
       "metadata": {
         "description": "The VM role size of the jump box"
       }
+    },
+    "sshRSAPublicKey": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "SSH public key used for auth to all Linux machines.  Not Required.  If not set, you must provide a password key."
+      }
     }
   },
   "variables": {
+    "adminPassword": "[parameters('adminPassword')]",
+    "dnsNameForPublicIP": "[parameters('dnsNameForPublicIP')]",
+    "vmSize": "[parameters('vmSize')]",
+    "sshRSAPublicKey": "[parameters('sshRSAPublicKey')]",
+    "newStorageAccountName": "[parameters('dnsNameForPublicIP')]",
     "adminUsername": "azureuser",
     "vmName": "jumpbox",
     "availabilitySetNodes": "avail-set",
@@ -63,13 +69,14 @@
     "nodesLbID": "[resourceId('Microsoft.Network/loadBalancers',variables('nodesLbName'))]",
     "nodesLbIPConfigName": "NodesLBFrontEnd",
     "nodesLbIPConfigID": "[concat(variables('nodesLbID'),'/frontendIPConfigurations/', variables('nodesLbIPConfigName'))]",
-    "nodesLbBackendPoolName": "node-pool"
+    "nodesLbBackendPoolName": "node-pool",
+    "sshKeyPath": "[concat('/home/', variables('adminUsername'), '/.ssh/authorized_keys')]"
   },
   "resources": [
     {
       "type": "Microsoft.Storage/storageAccounts",
-      "name": "[parameters('newStorageAccountName')]",
-      "apiVersion": "2015-05-01-preview",
+      "name": "[variables('newStorageAccountName')]",
+      "apiVersion": "2015-06-15",
       "location": "[resourceGroup().location]",
       "properties": {
         "accountType": "[variables('storageAccountType')]"
@@ -90,7 +97,7 @@
       "properties": {
         "publicIPAllocationMethod": "[variables('publicIPAddressType')]",
         "dnsSettings": {
-          "domainNameLabel": "[parameters('dnsNameForPublicIP')]"
+          "domainNameLabel": "[variables('dnsNameForPublicIP')]"
         }
       }
     },
@@ -227,7 +234,7 @@
       "name": "[variables('vmName')]",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[concat('Microsoft.Storage/storageAccounts/', parameters('newStorageAccountName'))]",
+        "[concat('Microsoft.Storage/storageAccounts/', variables('newStorageAccountName'))]",
         "[concat('Microsoft.Network/networkInterfaces/', variables('vmName'), '-nic')]",
         "[concat('Microsoft.Compute/availabilitySets/', variables('availabilitySetNodes'))]"
       ],
@@ -236,12 +243,23 @@
           "id": "[resourceId('Microsoft.Compute/availabilitySets',variables('availabilitySetNodes'))]"
         },
         "hardwareProfile": {
-          "vmSize": "[parameters('vmSize')]"
+          "vmSize": "[variables('vmSize')]"
         },
         "osProfile": {
           "computername": "[variables('vmName')]",
           "adminUsername": "[variables('adminUsername')]",
-          "adminPassword": "[parameters('adminPassword')]"
+          "adminPassword": "[variables('adminPassword')]",
+          "linuxConfigurations":
+              {
+                  "ssh": {
+                      "publicKeys": [
+                          {
+                              "path": "[variables('sshKeyPath')]",
+                              "keyData": "[variables('sshRSAPublicKey')]"
+                          }
+                      ]
+                  }
+              }
         },
         "storageProfile": {
           "imageReference": {
@@ -253,7 +271,7 @@
           "osDisk": {
             "name": "[concat(variables('vmName'),'-osdisk')]",
             "vhd": {
-              "uri": "[concat('http://', parameters('newStorageAccountName'), '.blob.core.windows.net/', variables('vhdBlobContainer'), '/', variables('vmName'), '-osdisk.vhd')]"
+              "uri": "[concat('http://', variables('newStorageAccountName'), '.blob.core.windows.net/', variables('vhdBlobContainer'), '/', variables('vmName'), '-osdisk.vhd')]"
             },
             "caching": "ReadWrite",
             "createOption": "FromImage"
@@ -279,7 +297,7 @@
       "properties": {
         "publisher": "Microsoft.OSTCExtensions",
         "type": "CustomScriptForLinux",
-        "typeHandlerVersion": "1.2",
+        "typeHandlerVersion": "1.3",
         "settings": {
           "commandToExecute": "/bin/bash -c 'wget --tries 20 --retry-connrefused --waitretry=15 -qO- https://raw.githubusercontent.com/anhowe/ubuntu-devbox/master/configure-ubuntu.sh | nohup /bin/bash > /var/log/azure/firstinstall.log 2>&1 &'"
         }
